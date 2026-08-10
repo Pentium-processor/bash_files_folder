@@ -1,8 +1,7 @@
 #!/bin/bash
-pip list > py_packages.txt
-number_of_py_packages=$(awk "NR==3,NR=max{print}" py_packages.txt | wc -l)
-apt-mark showmanual > installed_packages.txt
-number_of_linux_packages=$(cat installed_packages.txt | wc -l)
-echo -e  "\nnumber of python packages installed :$number_of_py_packages"
-echo  "number of linux packages manually installed:$number_of_linux_packages "
-rm -r py_packages.txt installed_packages.txt
+
+echo -e "Number of installed python packages: $(pip3 list | awk 'NR==3,NR==max {print}' | wc -l)"
+
+#Only works on debian-based distributions e.g. Ubuntu
+
+echo "Number of manually installed linux packages: $(apt-mark showmanual | wc -l)"
