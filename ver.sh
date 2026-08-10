@@ -1,6 +1,7 @@
 #!/bin/bash
-echo "PACKAGE NAME:"
-read package_name
 
-package=$(pip list  | grep -wi $package_name)
-echo "$package
+echo "PIP PACKAGE:"
+
+read pip_package_name
+
+echo "PACKAGE VERSION:$(pip3 list | rg -FN "$pip_package_name" | awk -F " " '{print $2}')"
