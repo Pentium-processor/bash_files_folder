@@ -2,7 +2,7 @@
 
 bkg_color_values=(234 235 236 237 238 239 240 241 242 243 244 245 231 27)
 
-lines=$(($(tput lines) / 2))
+lines=$(($(tput lines) / 2 + 5))
 cols=$(($(tput cols) / 2 - 50))
 
 
@@ -11,10 +11,10 @@ function check_terminal_resolution {
   rows=$(tput lines)
   columns=$(tput cols)
 
-  if [[ $rows -lt 42 && $columns -lt 173 ]]; then
+  if [[ $rows -lt 27 || $columns -lt 101 ]]; then
 
      tput reset && echo -e "\033[31m Exitted due to the low terminal resolution of $columns x $rows. \033[0m"
-     exit -1
+     exit 1
 
   fi
 
@@ -62,26 +62,26 @@ tput setaf 16
 
 tput cup "$lines" "$cols"
 
-for ((line=18;line>0;line--)); do
+for ((line=19;line>0;line--)); do
 
     check_terminal_resolution
     ((lines--))
     tput cup "$lines" "$cols"
     echo "${msx_logo[line]}"
-    sleep 0.1
+    sleep 0.03
 
 
 done
 
-lines=$(($(tput lines) / 2))
+lines=$(($(tput lines) / 2 + 5))
 cols=$(($(tput cols) / 2 - 11))
 
 tput setab 27
 tput setaf 15
 
-sleep 1
 check_terminal_resolution
 tput cup "$lines" "$cols" && echo "VRAM:128Kbytes"
+check_terminal_resolution
 
 sleep 2
 tput reset
