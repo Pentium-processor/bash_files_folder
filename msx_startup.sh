@@ -1,7 +1,5 @@
 #!/bin/bash
 
-bkg_color_values=(234 235 236 237 238 239 240 241 242 243 244 245 231 27)
-
 lines=$(($(tput lines) / 2 + 5))
 cols=$(($(tput cols) / 2 - 50))
 
@@ -44,25 +42,18 @@ msx_logo=(
 )
 
 tput init
+tput setab 27
 tput civis
-
-for bkg_color in "${bkg_color_values[@]}"; do
-
-    check_terminal_resolution
-    tput setab "$bkg_color"
-    sleep 0.1
-    clear
-
-done
+tput clear
 
 sleep 1
-
-tput setab 15
-tput setaf 16
 
 tput cup "$lines" "$cols"
 
 for ((line=19;line>0;line--)); do
+
+    tput setab 15
+    tput setaf 16
 
     check_terminal_resolution
     ((lines--))
@@ -83,5 +74,5 @@ check_terminal_resolution
 tput cup "$lines" "$cols" && echo "VRAM:128Kbytes"
 check_terminal_resolution
 
-sleep 2
+sleep 1
 tput reset
