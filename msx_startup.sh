@@ -7,12 +7,15 @@ mapfile -t logo_arr < "/home/ahan/bash_files_folder/msx_logo.txt"
 
 function check_terminal_resolution {
 
+  local rows
+  local columns
+
   rows=$(tput lines)
   columns=$(tput cols)
 
-  if [[ $rows -lt 27 || $columns -lt 101 ]]; then
+  if [[ "$rows" -lt 27 || "$columns" -lt 101 ]]; then
 
-     tput reset && printf "\033[31m Exitted due to the low terminal resolution of %ix%i \033[0m" $columns $rows
+     tput reset && printf "\033[31m Exitted due to the low terminal resolution of %ix%i \033[0m" "$columns" "$rows"
      exit 1
 
   fi
@@ -27,8 +30,8 @@ function handle_interrupt {
 }
 
 tput init
-tput setab 27
 tput civis
+tput setab 27
 tput clear
 
 trap handle_interrupt INT
@@ -36,7 +39,7 @@ trap handle_interrupt INT
 sleep 1
 tput cup "$lines" "$cols"
 
-for ((line=18;line>0;line--)); do
+for ((line="$((${#logo_arr[@]} - 1))";line>=0;line--)); do
 
     tput setab 15
     tput setaf 16
